@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>faceswap-guide-cn</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>提取流程指南</h1>
+<h2><br>内容</h2>
+<ul>
+<li><a href="#介绍">介绍</a></li>
+<li>
+<a href="#为什么要提取">为什么要提取</a>
+<ul>
+<li><a href="#匹配文件">匹配文件</a></li>
+</ul>
+</li>
+<li><a href="#提取">提取</a></li>
+<li>分类</li>
+<li>清理 “匹配文件”</li>
+<li>
+手动修复 “匹配文件”
+<ul>
+<li>启动手动工具</li>
+<li>手动修复转换</li>
+<li>手动修复训练集</li>
+</ul>
+</li>
+<li>从 “匹配文件” 中提取训练集</li>
+<li>合并 “人脸集” 进行训练</li>
+</ul>
+<h2>介绍<a id='介绍'></a></h2>
+<p>很多人在开始 &quot;Faceswap&quot; 时不知所措，并且犯了许多错误。错误是好的，这是我们的学习方式，但有时在深入学习之前对所涉及的过程有一点了解可能会有所帮助。</p>
+<p>在本文中，我将详细介绍 “抽取” 的工作流程。 我并不是说这是最好的工作流程，但是它对我很管用，希望在您创建自己的工作流程时提供一个良好的起点。</p>
+<p>我将在本指南中使用 “GUI”，在 “cli” 中也完全相同（“GUI” 中存在的所有选项在 “cli” 中都是可用的）。</p>
+<h2>为什么要提取<a id='为什么要提取'></a></h2>
+<p>“提取” 包括三个阶段： “检测”、 “匹配”、 和 “遮罩生成” 。每个阶段都有几个插件。它们的优缺点在工具提示（针对“GUI”）或帮助文本（针对“cli”）中都有详细说明，因此不再赘述。 然而，“检测” 是在每一帧中查找人脸的过程，“匹配” 是在人脸中查找 “特征” 并一致地确定人脸位置的过程。最终，“遮罩生成” 将创建一个 “遮罩”，即识别出图像中哪些是人脸，哪些不是。</p>
+<p>提取有两个主要目的：</p>
+<pre><code>1.生成一组 “人脸集”，以及可选的 “匹配文件” 和 “遮罩”，以训练模型
+2.为转换帧中的人脸生成 “匹配文件” 和 “遮罩”
+</code></pre>
+
+<p>从技术上讲还有第三个目的，当您为转换提取人脸时，也需要一些人脸进行训练，这些我都会讲到。</p>
+<p>虽然转换时不需要提取人脸（仅需要“匹配文件”），但是提取出来将是很有用的，以便我们可以为转换过程清理 “人脸集”。</p>
+<h3>匹配文件<a id='匹配文件'></a></h3>
+<p>“匹配文件” 保存了每帧中所有的人脸信息，特别是人脸位置，以及人脸的68个 “特征点” 位置：</p>
+<p><img src="https://images2018.cnblogs.com/blog/262380/201804/262380-20180403182450057-1646538573.png" /></p>
+<p>该文件还保存了为每个人脸提取的所有 “遮罩”</p>
+<p>“匹配文件” 的目的有三点：</p>
+<pre><code>1.训练：如果启用了 “Warp to Landmarks”，它将提供人脸特征。
+2.转换：它告诉 “转换” 程序在原始帧中要替换的人脸位置。
+3.训练和转换：它存储了所有可能用于这两个阶段的 “遮罩”。 
+</code></pre>
+
+<p>因此，现在我们知道了为什么需要提取人脸，如何确定一个良好的工作流程？</p>
+<h2>提取<a id='提取'></a></h2>
+<p>第一步，无论您创建 “人脸集” 的原因是什么，实际上都需要从帧中提取人脸。</p>
+<ul>
+<li>
+<p>Data【数据】<br>
+这是我们选择 “输入视频” 或 “图像” 以及 “输出位置” 的地方。</p>
+<p><img src="https://forum.faceswap.dev/download/file.php?id=222" /></p>
+<ul>
+<li>Input Dir【输入文件】：首先，我们需要一个源文件。可以将其设置为视频文件（视频图标）或包含一系列图像的文件夹（图片图标）。</li>
+<li>Output Dir【输出文件】：接下来，我们需要告诉程序将提取的人脸保存到哪里。单击旁边的文件夹图标以选择输出位置。</li>
+<li>
+我忽略了接下来的几个选项，因此您可能也应该这样做，但是每个选项的说明如下：
+<ul>
+<li>Alignments【匹配】：如果要为 “匹配文件” 指定一个不同的 “名称/位置”，则选择此项。将其保留为空白要容易得多，程序会将其保存到默认位置（该位置将与“源帧/视频”位于同一位置）。
+<br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Plugins【插件】<br>
+这些插件用于首先检测图像中的人脸，读取人脸特征并匹配，并且使用各种方法创建遮罩。</p>
+<p><img src="https://forum.faceswap.dev/download/file.php?id=193" /></p>
+<ul>
+<li>Detector【检测器】，Aligner【匹配器】：分别选择一个您想使用的。在撰写本文时，最佳检测器是 “S3FD”，最佳匹配器是 “FAN”。</li>
+<li>
+<p>Masker【遮罩】：选择您要使用的遮罩。基于 “特征” 的 “遮罩”（Components和Extended）会在提取过程中自动生成，因此您无法选择它们，但是下面将对其进行详细说明，以便您了解其运行方式。 除了基于特征的遮罩之外，此处选择的任何一项都会生成一个遮罩。 可以生成多个遮罩（通过选择多个遮罩），但是请注意，所有这些遮罩均使用GPU，因此添加的遮罩越多，提取速度就越慢。</p>
+<p>每个遮罩都有各自的优缺点。如果希望使用基于神经网络的遮罩来训练或转换帧，则应在此处选择一个遮罩。</p>
+<p>注意：遮罩是新添加的，因此最佳的使用信息是相当少的。 尽管在提取过程中只能提取一个遮罩，但是可以使用 “遮罩工具” 提取更多的遮罩/将遮罩添加到现有的 “匹配文件” 中，以及生成预览。</p>
+<ul>
+<li>
+<p>None -不创建遮罩。</p>
+</li>
+<li>
+<p>Components -由在匹配阶段找到的68个特征点生成的遮罩，这是围绕人脸外部特征点构建的多区域遮罩。
+<img src="https://forum.faceswap.dev/download/file.php?id=194" /></p>
+</li>
+<li>
+<p>Extended -“Components遮罩” 的一个主要问题是它只能到眉毛。 “Extended遮罩” 基于 “Components遮罩”，但会尝试向上提高到额头以避免 “双眉” 问题（即在交换中源眉毛和目标眉毛同时出现了）。
+<img src="https://forum.faceswap.dev/download/file.php?id=195" /></p>
+</li>
+<li>
+<p>Unet-DFL -一种神经网络遮罩，旨在提供对大部分正面人脸的智能分割。遮罩模型由社区成员训练。
+<img src="https://forum.faceswap.dev/download/file.php?id=196" /></p>
+</li>
+<li>
+<p>VGG-Clear -一种神经网络遮罩，旨在对大部分正面人脸进行无障碍物的智能分割。
+<img src="https://forum.faceswap.dev/download/file.php?id=197" /></p>
+</li>
+<li>
+<p>VGG-Obstructed -设计用于对大部分正面人脸进行智能分割，遮罩模型经过专门训练，可以识别一些面部障碍物（手和眼镜）。
+<img src="https://forum.faceswap.dev/download/file.php?id=198" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Normalization【正则化】：处理输入到提取器中的图像，以在困难的光照条件下更好地找到人脸。 不同的正则化方法适用于不同的数据集，但我发现 “hist” 是最好的全能工具，这会稍微减慢提取速度，但是会更好的匹配。</p>
+</li>
+<li>
+接下来的几个选项也可以忽略。 同样，我将详细介绍他们的工作，以便您可以自己使用：
+<ul>
+<li>Rotate Images：除了CV2-DNN以外，当前的检测器都完全不需要此项。 当前的检测器完全能够在任何方向上找到人脸，因此这只会使您的程序变慢却几乎没有好处。
+<br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Face Processing【人脸处理】<br>
+此处定义了用于 “人脸过滤” 和 “选择” 的选项。
+<img src="https://forum.faceswap.dev/download/file.php?id=228" /></p>
+<ul>
+<li>Min-size：我通常将此值设置为一个较低的值，但要大于零，以滤除任何明显太小而无法构成人脸的东西。 但是，它首先将取决于输入帧的大小，其次才取决于人脸在帧中的大小。</li>
+<li>
+由于以下原因，我忽略了接下来的几个选项，但是您可以自己去使用。 下面分别对它们进行解释：
+<ul>
+<li>Filter/nFilter, Ref Threshold：这些选项用于过滤掉不需要的人脸。 我不使用它。 我更喜欢在下一个阶段自己做，因为我总是比机器更有效地过滤人脸，并且不会花很长时间。 用这些选项过滤人脸也会严重减慢提取过程。
+<br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+Output【输出】<br>
+用于人脸输出处理的选项。
+<ul>
+<li>
+Extract Every N：此选项值是根据提取目标而定的。
+<ul>
+<li>如果是为 “转换” 提取，或者是为 “转换” 而将使用一些人脸进行 “训练”，则将其保留为1（即从每帧提取）。</li>
+<li>如果您提取只是用于训练，则设置一个看起来合理的值。 这将取决于您输入的每秒帧数。 但是，对于 25fps 的视频，合理值大约在12-25之间（即每半秒到一秒）。否则，您最终可能会拥有太多相似的面孔。 值得牢记的是，您要从训练集中提取多少个来源，最终训练集中要拥有多少张面孔，以及来源有多长。 这些都将视情况而定。</li>
+</ul>
+</li>
+<li>
+再次，我通常会跳过接下来的几个选项，说明如下：
+<ul>
+<li>Size：这是提取的人脸图像的大小。 当前没有模型支持 256px 以上，因此请保留默认值</li>
+<li>Save interval：我不介意，但要取决于您。</li>
+<li>Debug Landmarks：在人脸绘制特征，仅用于调试目的。
+<br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+Run【运行】<br>
+我们现在准备检查我们的选项并运行 “Extract【提取】”。
+<ul>
+<li>您应该最终看到类似于下面的屏幕：
+<img src="https://forum.faceswap.dev/download/file.php?id=227" /></li>
+</ul>
+</li>
+</ul>
+<h2>分类</h2>
+<p>现在我们已经提取了脸部，我们需要整理 “数据集” 和 “匹配文件”。 “提取器” 在获取人脸方面做得很好，但并不完美。 它将有一些误报，将无法匹配某些面孔，还会提取出我们不想交换的人。 如果您转至 “faces” 文件夹，最有可能的是输出如下所示相似的内容：
+<img src="https://forum.faceswap.dev/download/file.php?id=32" /></p>
+<p>清理这些看起来不太有趣！ 幸运的是我们可以让这更容易。 清理数据集的最快、最简单的方法是将这些面孔按有意义的顺序分类，然后删除所有我们不需要的人脸。 最好的分类方法是 “按人脸分类”。</p>
+<p>注意：按人脸分类是RAM密集型的，它要做很多计算。 我已经测试成功在 8GB RAM 上对 22k 张人脸进行了分类。 如果您要分类的人脸数量超出了 RAM，则该过程将自动切换到慢得多的方法，因此，如果您的内存有限，则可能需要将数据集拆分为较小的子集。 理论上，所需的 RAM 量为 (n2 * 24)/1.8，其中 n 是图像数。 您还需要考虑任何其他 RAM 开销（即其他程序正在运行，加载到 RAM 的映像），但理论上，这将占用 30,000 个图像 (300002 * 24)/ 1.8 = 12,000,000,000 字节或大约 11GB。</p>
+<p>转到 “GUI” 中的 “Tools” 选项卡，然后转到 “Sort” 子选项卡：
+<img src="https://forum.faceswap.dev/download/file.php?id=113" /></p>
+<ul>
+<li>
+<p>Data【数据】<br>
+这里选择的是用于分类的人脸集，它是我们在上一步中提取的。</p>
+<ul>
+<li>Input：输入上一步中提取的人脸文件夹。</li>
+<li>Output：应该为空，我们希望分类后的人脸放在相同位置。
+<img src="https://forum.faceswap.dev/download/file.php?id=115" /></li>
+</ul>
+</li>
+<li>
+<p>Sort Settings【分类设置】<br>
+我们要如何对人脸进行分类。</p>
+<ul>
+<li>Sort By【分类方式】：将此设置为 “Face”。<br>
+您可以忽略此部分中的任何其他选项。
+<img src="https://forum.faceswap.dev/download/file.php?id=116" /></li>
+</ul>
+</li>
+<li>
+<p>Output【输出】<br>
+我们希望分类后的人脸如何输出。</p>
+<ul>
+<li>Final Process【最终流程】：确保将其设置为 “Rename”</li>
+<li>Keep：确保未选中。<br>
+您可以保留所有其他选项，因为它们对 “Rename” 任务没有任何影响。
+<img src="https://forum.faceswap.dev/download/file.php?id=117" /></li>
+</ul>
+</li>
+<li>
+<p>Settings【设置】<br>
+分类的特定设置。</p>
+<ul>
+<li>后端：可将此设置为GPU。 仅当您具有 GPU 且当前未将 GPU 用于其他任何机器学习任务（例如训练）时，才执行此操作。 这将使分类更快。<br>
+您可以保留所有其他选项。
+<img src="https://forum.faceswap.dev/download/file.php?id=118" /></li>
+</ul>
+</li>
+<li>
+<p>Run【运行】<br>
+所有其他选项保留为默认值。 现在，我们准备检查我们的选项并运行 “Sort”。</p>
+<ul>
+<li>
+<p>您将最终看到类似于以下的屏幕：
+<img src="https://forum.faceswap.dev/download/file.php?id=114" /></p>
+</li>
+<li>
+<p>点击 “Sort” 开始分类。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>程序将开始读取人脸，为每个人脸建立身份。 然后它将根据相似度将面孔聚集。 实际中聚集过程可能需要很长时间，因为它需要计算大量数据。 不幸的是，没有关于进度的视觉反馈，因此请耐心等待。</p>
+<p>完成后，您应该发现99％的面孔已分类在一起：
+<img src="https://forum.faceswap.dev/download/file.php?id=235" /></p>
+<p>所有无用的也一起分类了：
+<img src="https://forum.faceswap.dev/download/file.php?id=32" /></p>
+<p>现在您要做的就是滚动 faces 文件夹，删除那些不想保留的人脸。</p>
+<h2>清理 “匹配文件”</h2>
+<p>现在我们已经删除了所有不需要的人脸，只留下我们要做的一组，我们需要清理 &quot;匹配文件”。为什么？ 因为我们不需要的已经删除的人脸还在 “匹配文件” 中，因此将来很可能会给我们造成问题。 使用集成的工具清理 “匹配文件” 还有一个额外好处，就是将我们的人脸重新命名为它们的原始文件名，因此是双赢的。</p>
+<p>导航至 “Tools” 标签，然后选择 “Alignments” 子标签：
+<img src="https://forum.faceswap.dev/download/file.php?id=120" /></p>
+<ul>
+<li>
+<p>Job【作业】<br>
+这是 &quot;Tools” 中所有可用的不同匹配作业的列表。</p>
+<ul>
+<li>选择 “Remove-faces”。
+<img src="https://forum.faceswap.dev/download/file.php?id=121" /></li>
+</ul>
+</li>
+<li>
+<p>Data【数据】<br>
+我们要处理的资源的位置。</p>
+<ul>
+<li>Alignments File：选择在提取过程中生成的 “匹配文件”，它将与您提取的视频位于同一文件夹中，或者位于您提取的图像的文件夹中。</li>
+<li>Faces Folder：选择在提取过程中将人脸输出到的 Faces 文件夹（与用于人脸分类的文件夹相同）。</li>
+<li>本节中的其它选项留空，因为它们不是必需的。
+<img src="https://forum.faceswap.dev/download/file.php?id=122" /></li>
+</ul>
+</li>
+<li>
+<p>Run【运行】<br>
+所有其它选项保留为默认值。 我们现在准备检查我们的选项并清理 “匹配文件”。</p>
+<ul>
+<li>
+<p>您应该最终看到类似于以下的屏幕：
+<img src="https://forum.faceswap.dev/download/file.php?id=123" /></p>
+</li>
+<li>
+<p>点击 “Alignments”，然后等待完成。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>完成后，您的人脸将被重命名为其原默认名称，并且所有不需要的人脸将从您的 “匹配文件” 中删除。</p>
+<p>该过程将备份您的 旧“匹配文件”，并将其放在新创建的 “匹配文件” 旁边。 它的名称与清理后的 “匹配文件” 名称相同，但文件名末尾会附加 &quot;backup_<timestamp>&quot;。 如果您新的 “匹配文件” 是正确无误的且感到满意，则可以安全地删除此备份文件。</p>
+<p>此时，如果您正在提取以进行转换（或该集合将用于转换和训练），则可以完全删除您的 faces 文件夹，这些人脸都不再需要。 如果您需要重新生成 “人脸集”，则可以使用 “Alignments Tool” （提取作业）来完成。</p>
+<h2>手动修复 “匹配文件”</h2>
+<p>Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了吗？ 等等，伙计。 当然，您可以继续前进，但是您想要好的 “交换” 还是想要一次很好的 “交换”？</p>
+<p>手动修复对于以下任务很有用：</p>
+<ul>
+<li>删除帧中任意剩余的 “多个人脸”</li>
+<li>向缺少的帧中添加任何 “匹配文件”</li>
+<li>修复未匹配的帧</li>
+</ul>
+<p>根据我们要提取数据集的内容，这将决定我们要在此处执行的操作。 如果我们纯粹只提取一个训练集，则可以完全跳过此步骤，然而最好检查一下现有的 “匹配文件” 以确保正确构建任何遮罩。</p>
+<p>如果为 “转换” 而提取，那么我们绝对要修复帧中的任何多个人脸，以及所有缺少匹配的帧。仅此一项就可以改善最终交换。 然后，根据您想要的程度，可以解决所有不良的匹配。</p>
+<p>我将不详细介绍如何使用手动工具。 那本身就是一个指南，但是非常直观，在弹出窗口中编写了说明。</p>
+<ul>
+<li>
+<p>启动手动工具
+要启动手动工具，首先导航至 “Tools” 选项卡，然后导航至 “Alignments” 子选项卡：
+<img src="https://forum.faceswap.dev/download/file.php?id=120" /></p>
+<ul>
+<li>
+<p>Job【作业】<br>
+这是该工具中所有可用的 “匹配作业” 的列表。</p>
+<ul>
+<li>选择 “Manual”：
+<img src="https://forum.faceswap.dev/download/file.php?id=124" /></li>
+</ul>
+</li>
+<li>
+<p>Data【数据】<br>
+我们要处理的资源位置。</p>
+<ul>
+<li>Alignments File：选择在最后一步清理后生成的 “匹配文件”。 它将与您提取的视频位于同一文件夹中，或者位于您提取的图像文件夹中。</li>
+<li>Frames Folder：选择用作提取过程输入的视频或帧文件夹</li>
+<li>将本节中的所有其他选项保留为空白，因为此步骤不需要
+<img src="https://forum.faceswap.dev/download/file.php?id=125" /></li>
+</ul>
+</li>
+<li>
+<p>Run【运行】<br>
+所有其他选项保留为默认值。 我们现在准备检查我们的选项并启动手动工具。</p>
+<ul>
+<li>您应该最终看到类似于以下的屏幕：
+<img src="https://forum.faceswap.dev/download/file.php?id=126" /></li>
+<li>点击 “Alignments” 按钮以启动手动工具。</li>
+<li>注意：Windows 用户有时 Windows 会出现一个错误，该错误会导致手动工具打开然后立即关闭。 如果您遇到这种情况，请在 GUI 的 “Manual Tool” 节中启用 “Disable Monitor” 选项：
+<img src="https://forum.faceswap.dev/download/file.php?id=127" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
