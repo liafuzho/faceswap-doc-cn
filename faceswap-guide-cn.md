@@ -1,6 +1,5 @@
 #[FaceSwap](https://faceswap.dev/) 使用指南
-<font color="silver">翻译自&nbsp;[^translated_from]：</font><br>
-[^translated_from]: 目前官网中没有关于 “转换” 的使用指南。
+<font color="silver">翻译自：</font><br>
 [https://faceswap.dev/forum/viewtopic.php?f=5&t=27](https://faceswap.dev/forum/viewtopic.php?f=5&t=27)<br>
 [https://forum.faceswap.dev/viewtopic.php?f=6&t=146](https://forum.faceswap.dev/viewtopic.php?f=6&t=146)
 
@@ -55,22 +54,18 @@
 
 虽然转换时不需要提取人脸（仅需要“匹配文件”），但是提取出来将是很有用的，以便我们可以为转换过程清理 “人脸集”。
 
-###匹配文件&nbsp;[^alignments_file]<a id='匹配文件'></a>
-
-[^alignments_file]: 根据该文件在 Faceswap 中的作用，鄙人觉得翻译为 “匹配文件” 更加符合。
+###匹配文件<a id='匹配文件'></a>
 
 “匹配文件” 保存了每帧中所有的人脸信息，特别是人脸位置，以及人脸的68个 “特征点” 位置：<br>
 
-![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/262380-20180403182450057-1646538573.png)&nbsp;[^self_img_1]
-
-[^self_img_1]: 因原文此图片未能打开，故根据文中意思自己补了一张图片。
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/262380-20180403182450057-1646538573.png)<br>
+<font color="silver" size="2">*此图片是译者根据其文本意义补充的，原文图片已不能显示。*</font>
 
 该文件还保存了为每个人脸提取的所有 “遮罩”
 
 “匹配文件” 的目的有三点：
 
-1. 训练：如果启用了 “Warp to Landmarks”&nbsp;[^Warp_to_Landmarks]，它将提供人脸特征。
-[^Warp_to_Landmarks]: 这个词不好翻译，故直接使用英文。
+1. 训练：如果启用了 “Warp to Landmarks”，它将提供人脸特征。
 2. 转换：它告诉 “转换” 程序在原始帧中要替换的人脸位置。
 3. 训练和转换：它存储了所有可能用于这两个阶段的 “遮罩”。 
 
@@ -82,7 +77,7 @@
 * Data【数据】<br>
 这是我们选择 “输入视频” 或 “图像” 以及 “输出位置” 的地方。<br>
 
-	![](https://forum.faceswap.dev/download/file.php?id=222)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/222.jpg)
 
 	* Input Dir：首先，我们需要一个源文件。可以将其设置为视频文件（视频图标）或包含一系列图像的文件夹（图片图标）。
 	* Output Dir：接下来，我们需要告诉程序将提取的人脸保存到哪里。单击旁边的文件夹图标以选择输出位置。
@@ -92,7 +87,7 @@
 * Plugins【插件】<br>
 这些插件用于首先检测图像中的人脸，读取人脸特征并匹配，并且使用各种方法创建遮罩。<br>
 
-	![](https://forum.faceswap.dev/download/file.php?id=193)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/193.jpg)
 
 	* Detector【检测器】，Aligner【匹配器】：分别选择一个您想使用的。在撰写本文时，最佳检测器是 “S3FD”，最佳匹配器是 “FAN”。
 	* Masker【遮罩】：选择您要使用的遮罩。基于 “特征” 的 “遮罩”（Components和Extended）会在提取过程中自动生成，因此您无法选择它们，但是下面将对其进行详细说明，以便您了解其运行方式。 除了基于特征的遮罩之外，此处选择的任何一项都会生成一个遮罩。 可以生成多个遮罩（通过选择多个遮罩），但是请注意，所有这些遮罩均使用GPU，因此添加的遮罩越多，提取速度就越慢。
@@ -104,19 +99,19 @@
 		* None -不创建遮罩。
 		
 		* Components -由在匹配阶段找到的68个特征点生成的遮罩，这是围绕人脸外部特征点构建的多区域遮罩。<br>
-		![](https://forum.faceswap.dev/download/file.php?id=194)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/194.png)
 
 		* Extended -“Components遮罩” 的一个主要问题是它只能到眉毛。 “Extended遮罩” 基于 “Components遮罩”，但会尝试向上提高到额头以避免 “双眉” 问题（即在交换中源眉毛和目标眉毛同时出现了）。<br>
-		![](https://forum.faceswap.dev/download/file.php?id=195)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/195.png)
 
 		* Unet-DFL -一种神经网络遮罩，旨在提供对大部分正面人脸的智能分割。遮罩模型由社区成员训练。<br>
-		![](https://forum.faceswap.dev/download/file.php?id=196)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/196.png)
 
 		* VGG-Clear -一种神经网络遮罩，旨在对大部分正面人脸进行无障碍物的智能分割。<br>
-		![](https://forum.faceswap.dev/download/file.php?id=197)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/197.png)
 
 		* VGG-Obstructed -设计用于对大部分正面人脸进行智能分割，遮罩模型经过专门训练，可以识别一些面部障碍物（手和眼镜）。<br>
-		![](https://forum.faceswap.dev/download/file.php?id=198)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/198.png)
 
 	* Normalization【正则化】：处理输入到提取器中的图像，以在困难的光照条件下更好地找到人脸。 不同的正则化方法适用于不同的数据集，但我发现 “hist” 是最好的全能工具，这会稍微减慢提取速度，但是会更好的匹配。
 	* 接下来的几个选项也可以忽略。 同样，我将详细介绍他们的工作，以便您可以自己使用：
@@ -124,7 +119,7 @@
 <br><br>
 * Face Processing【人脸处理】<br>
 此处定义了用于 “人脸过滤” 和 “选择” 的选项。<br>
-![](https://forum.faceswap.dev/download/file.php?id=228)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/228.jpg)
 
 	* Min-size：我通常将此值设置为一个较低的值，但要大于零，以滤除任何明显太小而无法构成人脸的东西。 但是，它首先将取决于输入帧的大小，其次才取决于人脸在帧中的大小。
 	* 由于以下原因，我忽略了接下来的几个选项，但是您可以自己去使用。 下面分别对它们进行解释：
@@ -143,59 +138,57 @@
 * Run【运行】<br>
 我们现在准备检查我们的选项并运行 “Extract【提取】”。
 	* 您应该最终看到类似于下面的屏幕：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=227)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/227.jpg)
 
-##分类&nbsp;[^face_sort]<a id='分类'></a>
-[^face_sort]: 原文直译为排序，但根据实际操作，翻译为 “分类” 更加容易理解。
-
+##分类<a id='分类'></a>
 现在我们已经提取了脸部，我们需要整理 “数据集” 和 “匹配文件”。 “提取器” 在获取人脸方面做得很好，但并不完美。 它将有一些误报，将无法匹配某些面孔，还会提取出我们不想交换的人。 如果您转至 “faces” 文件夹，最有可能的是输出如下所示相似的内容：<br>
-![](https://forum.faceswap.dev/download/file.php?id=32)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/32.jpg)
 
 清理这些看起来不太有趣！ 幸运的是我们可以让这更容易。 清理数据集的最快、最简单的方法是将这些面孔按有意义的顺序分类，然后删除所有我们不需要的人脸。 最好的分类方法是 “按人脸分类”。
 
 **注意**：按人脸分类是RAM密集型的，它要做很多计算。 我已经测试成功在 8GB RAM 上对 22k 张人脸进行了分类。 如果您要分类的人脸数量超出了 RAM，则该过程将自动切换到慢得多的方法，因此，如果您的内存有限，则可能需要将数据集拆分为较小的子集。 理论上，所需的 RAM 量为 (n2 * 24)/1.8，其中 n 是图像数。 您还需要考虑任何其他 RAM 开销（即其他程序正在运行，加载到 RAM 的映像），但理论上，这将占用 30,000 个图像 (300002 * 24)/ 1.8 = 12,000,000,000 字节或大约 11GB。
 
 转到 “GUI” 中的 “Tools” 选项卡，然后转到 “Sort” 子选项卡：<br>
-![](https://forum.faceswap.dev/download/file.php?id=113)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/113.jpg)
 
 * Data【数据】<br>
 这里选择的是用于分类的人脸集，它是我们在上一步中提取的。
 	* Input：输入上一步中提取的人脸文件夹。
 	* Output：应该为空，我们希望分类后的人脸放在相同位置。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=115)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/115.jpg)
 
 * Sort Settings【分类设置】<br>
 我们要如何对人脸进行分类。
 	* Sort By【分类方式】：将此设置为 “Face”。<br>
 	您可以忽略此部分中的任何其他选项。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=116)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/116.jpg)
 
 * Output【输出】<br>
 我们希望分类后的人脸如何输出。
 	* Final Process【最终流程】：确保将其设置为 “Rename”
 	* Keep：确保未选中。<br>
 	您可以保留所有其他选项，因为它们对 “Rename” 任务没有任何影响。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=117)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/117.jpg)
 * Settings【设置】<br>
 分类的特定设置。
 	* 后端：可将此设置为GPU。 仅当您具有 GPU 且当前未将 GPU 用于其他任何机器学习任务（例如训练）时，才执行此操作。 这将使分类更快。<br>
 	您可以保留所有其他选项。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=118)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/118.jpg)
 
 * Run【运行】<br>
 所有其他选项保留为默认值。 现在，我们准备检查我们的选项并运行 “Sort”。
 	* 您将最终看到类似于以下的屏幕：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=114)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/114.jpg)
 
 	* 点击 “Sort” 开始分类。
 
 程序将开始读取人脸，为每个人脸建立身份。 然后它将根据相似度将面孔聚集。 实际中聚集过程可能需要很长时间，因为它需要计算大量数据。 不幸的是，没有关于进度的视觉反馈，因此请耐心等待。
 
 完成后，您应该发现99％的面孔已分类在一起：<br>
-![](https://forum.faceswap.dev/download/file.php?id=235)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/235.jpg)
 
 所有无用的也一起分类了：<br>
-![](https://forum.faceswap.dev/download/file.php?id=32)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/32.jpg)
 
 现在您要做的就是滚动 faces 文件夹，删除那些不想保留的人脸。
 
@@ -203,24 +196,24 @@
 现在我们已经删除了所有不需要的人脸，只留下我们要做的一组，我们需要清理 "匹配文件”。为什么？ 因为我们不需要的已经删除的人脸还在 “匹配文件” 中，因此将来很可能会给我们造成问题。 使用集成的工具清理 “匹配文件” 还有一个额外好处，就是将我们的人脸重新命名为它们的原始文件名，因此是双赢的。
 
 导航至 “Tools” 标签，然后选择 “Alignments” 子标签：<br>
-![](https://forum.faceswap.dev/download/file.php?id=120)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/120.jpg)
 
 * Job【作业】<br>
 这是 "Tools” 中所有可用的不同匹配作业的列表。
 	* 选择 “Remove-faces”。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=121)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/121.jpg)
 
 * Data【数据】<br>
 我们要处理的资源的位置。
 	* Alignments File：选择在提取过程中生成的 “匹配文件”，它将与您提取的视频位于同一文件夹中，或者位于您提取的图像的文件夹中。
 	* Faces Folder：选择在提取过程中将人脸输出到的 Faces 文件夹（与用于人脸分类的文件夹相同）。
 	* 本节中的其它选项留空，因为它们不是必需的。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=122)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/122.jpg)
 
 * Run【运行】<br>
 所有其它选项保留为默认值。 我们现在准备检查我们的选项并清理 “匹配文件”。
 	* 您应该最终看到类似于以下的屏幕：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=123)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/123.jpg)
 
 	* 点击 “Alignments”，然后等待完成。
 
@@ -247,27 +240,27 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 
 * **<big>启动手动工具</big>**<a id='启动手动工具'></a><br>
 要启动手动工具，首先导航至 “Tools” 选项卡，然后导航至 “Alignments” 子选项卡：<br>
-![](https://forum.faceswap.dev/download/file.php?id=120)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/120.jpg)
 
 	* Job【作业】<br>
 	这是该工具中所有可用的 “匹配作业” 的列表。
 		* 选择 “Manual”：<br>
-		![](https://forum.faceswap.dev/download/file.php?id=124)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/124.jpg)
 
 	* Data【数据】<br>
 	我们要处理的资源位置。
 		* Alignments File：选择在最后一步清理后生成的 “匹配文件”。 它将与您提取的视频位于同一文件夹中，或者位于您提取的图像文件夹中。
 		* Frames Folder：选择用作提取过程输入的视频或帧文件夹
 		* 将本节中的所有其他选项保留为空白，因为此步骤不需要。<br>
-		![](https://forum.faceswap.dev/download/file.php?id=125)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/125.jpg)
 
 	* Run【运行】<br>
 	所有其他选项保留为默认值。 我们现在准备检查我们的选项并启动手动工具。
 		* 您应该最终看到类似于以下的屏幕：<br>
-		![](https://forum.faceswap.dev/download/file.php?id=126)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/126.jpg)
 		* 点击 “Alignments” 按钮以启动手动工具。
 		* **注意**：Windows 用户有时 Windows 会出现一个错误，该错误会导致手动工具打开然后立即关闭。 如果您遇到这种情况，请在 GUI 的 “Manual Tool” 节中启用 “Disable Monitor” 选项：<br>
-		![](https://forum.faceswap.dev/download/file.php?id=127)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/127.jpg)
 
 * **<big>为 “转换” 手动修复</big>**<a id='为_“转换”_手动修复'></a><br>
 **注意**：按 “m” 键切换 “查看” 和 “编辑” 模式。<br>
@@ -314,23 +307,23 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 	首先删除您的 faces 输出文件夹，您不想再这样了。
 	
 	接下来，导航至 “Tools” 标签，然后导航至 “Alignments” 子标签：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=120&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/120.jpg)
 	
 	* Job【作业】<br>
 	这是 “Tools” 下所有可用的 “匹配作业” 列表。
 		* 选择 “Extract”：<br>
-		![](https://forum.faceswap.dev/download/file.php?id=128&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/128.jpg)
 	* Data【数据】<br>
 	我们要处理的资源位置。<br>
 		* Alignments File：选择在最后一步清理后生成的 “匹配文件”。 它将与您提取的视频位于同一文件夹中，或者位于您提取的图像的文件夹中。
 		* Faces Folder：选择一个空文件夹，用于放置您想输出的人脸。
 		* Frames Folder：选择用作提取过程输入的视频或帧文件夹。
 		* 将本节中的任何其他选项保留为空白，因为此步骤不需要它们。<br>
-		![](https://forum.faceswap.dev/download/file.php?id=129&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/129.jpg)
 	* Run【运行】<br>
 	所有其他选项保留为默认值。我们现在准备检查我们的选项并启动手动工具。<br>
 		* 您应该最终看到类似于以下的屏幕：<br>
-		![](https://forum.faceswap.dev/download/file.php?id=130&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/130.jpg)
 		* 点击 “Alignments” 按钮重新提取您的人脸。
 
 如果打算使用遮罩进行训练或使用 “Warp to Landmarks”，请将 “匹配文件” 从源帧位置复制到新创建的 faces 文件夹中。
@@ -339,12 +332,12 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 现在，您已经清理了 “匹配文件”，您可能希望拉出其中一些人脸以用于训练集，这是一个简单的任务：
 
 导航到 “Tools” 选项卡，然后导航到 “Alignments” 子选项卡：<br>
-![](https://forum.faceswap.dev/download/file.php?id=120&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/120.jpg)
 
 * Job【作业】<br>
 这是该 “Tools” 中所有可用的 “匹配作业” 列表。
 	* 选择 “Extract”：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=128&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/128.jpg)
 
 * Data【数据】<br>
 我们要处理的资源位置。
@@ -352,19 +345,19 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 	* Faces Folder：选择一个空文件夹，用于放置输出的人脸。
 	* Frames Folder：选择用作提取过程输入的视频或帧文件夹。
 	* 将本节中的任何其他选项保留为空白，因为此步骤不需要它们。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=129&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/129.jpg)
 	
 * Extract【提取】<br>
 这些选项用于从 “匹配文件” 中提取人脸
 	* Extract Every N： 这取决于您输入的每秒帧数，但是，对于 25fps 的视频，合理值大约在 12-25 之间（即每半秒到一秒）。 否则，您最终可能会拥有太多类似的人脸。值得牢记的是，您要从 “训练集” 中提取多少个源，最终训练集中要拥有多少张人脸，以及源有多长时间，这些都将视情况而定。
 	* Size：这是提取的人脸图像大小，当前没有模型支持256px以上，因此请保留默认值。
 	* Align Eyes：我发现此选项完全没有意义。“匹配器” 已匹配人脸，无需进一步匹配。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=131&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/131.jpg)
 
 * Run【运行】<br>
 所有其他选项保留为默认值。我们现在准备检查选项，并将训练集从清理后的 “匹配文件” 中提取到所选文件夹中。
 	* 您应该最终看到类似于以下的屏幕：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=132&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/132.jpg)
 	* 点击 “Alignments” 按钮以提取人脸。
 
 如果打算使用遮罩训练或使用 “Warp to Landmarks”，则将 “匹配文件” 从源帧位置复制到新创建的 faces 文件夹中。
@@ -379,24 +372,24 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 * 将与刚从其源帧位置中选择的人脸相关的所有 “匹配文件” 复制到新的 “训练” 文件夹中。
 
 现在，在 GUI 中，导航到 “Tools” 选项卡，然后导航至 “Alignments” 子选项卡：<br>
-![](https://forum.faceswap.dev/download/file.php?id=120&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/120.jpg)
 
 * Job【作业】<br>
 这是该 “Tools” 中所有可用的 “匹配作业” 列表。
 	* 选择 “Merge”：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=133&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/133.jpg)
 
 * Data【数据】<br>
 我们要处理的资源的位置。
 	* Alignments File：找到 “训练” 文件夹，按住 “shift” 键并高亮显示您刚刚复制的所有路线文件以选择它们。
 	* Faces Folder：选择放置所有人脸的 “训练” 文件夹
 	* 将本节中的任何其他选项保留为空白，因为此步骤不需要它们。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=134&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/134.jpg)
 
 * Run【运行】<br>
 所有其他选项保留为默认值。我们现在准备检查我们的选项并合并我们的 “匹配文件”。
 	* 您应该最终看到类似于以下的屏幕：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=135&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/135.jpg)
 	* 点击 “Alignments” 按钮合并文件
 
 ###完成
@@ -406,7 +399,7 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 * 将 “训练” 文件夹中生成的 “匹配文件” 重命名为 “alignments.fsa”
 
 您的训练准备好了<br>
-![](https://forum.faceswap.dev/download/file.php?id=234&sid=bf0f02e0f77ef7b9907aa09f20c55508)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/234.jpg)
 
 <br><br>
 
@@ -428,7 +421,7 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 1. 编码器 -这项工作是将大量人脸作为输入，并将其“编码”为“矢量”表现形式。值得注意的是，它并不是在学习您输入的每个人脸的精确表示，而是在尝试创建一种算法，可用于以后尽可能地重建与输入图像更接近的人脸。
 2. 解码器 -它的任务是获取编码器创建的矢量，并尝试将此转换变回人脸，并尽可能接近输入图像。<br>
 
-![](https://forum.faceswap.dev/download/file.php?id=138&sid=b9515c1fd8e2ad0d963f01304321c957)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/138.png)
 
 某些模型的构造略有不同，但基本前提保持不变。
 
@@ -436,7 +429,7 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 
 1. 损失 -对于每一批输入到模型中的人脸，神经网络都会读取人脸并尝试通过其当前的编码和解码算法重新创建，并将其与所输入的实际人脸进行比较。完成后，它将给自己一个分数（损失值）并相应地更新其权重。
 2. 权重 -一旦模型评估了重新创建人脸的效果，它将更新其权重。编码器/解码器算法根据输入的数据，如果它在一个方向上调整了权重，但感觉重建的人脸比以前差，那它就知道权重在朝错误的方向移动，因此它将以另外的方向调整权重。如果感觉有所改进，那么它知道要在前进的方向不断的调整权重。<br>
-![](https://forum.faceswap.dev/download/file.php?id=139&sid=b9515c1fd8e2ad0d963f01304321c957)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/139.png)
 
 然后，模型会重复这个动作很多次，并根据其损失值不断更新其权重，从理论上讲会随着时间的推移而不断改进，直到您认为已学到足以有效重现人脸的程度，或者损失值停止下降。
 
@@ -444,7 +437,7 @@ Ok，我们提取出了人脸，清理了所有没用的，现在确定完事了
 
 * 共享编码器 -当我们训练模型时，我们为其提供了 2组 人脸。A集（我们要替换的原始人脸）和 B 集（我们要放置在场景中的交换人脸）。 实现这一目标的第一步是共享 A 和 B 集的编码器。 这样，我们的编码器可以为 2个 不同的人学习一个单一的算法。 这是极其重要的，因为我们最终将告诉我们的神经网络采取一个人脸的编码并将其解码为另一个人脸。 编码器因此需要查看和学习我们交换所需的两组人脸。
 * 交换解码器 -我们训练模型时，我们训练 2个 解码器。 解码器A 获取编码矢量并试图重新创建  “Face A”。 解码器B 正在获取编码矢量并试图重新创建 “Face B”。 当最终交换人脸时，我们切换解码器，因此我们将模型 “Face A” 输入，但要通过 解码器B。由于编码器已经在两组人脸上训练了，因此模型将对输入的 “Face A” 进行编码，然后尝试从 解码器B 重构它，从而从模型中输出交换的人脸。<br>
-![](https://forum.faceswap.dev/download/file.php?id=141&sid=b9515c1fd8e2ad0d963f01304321c957)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/141.png)
 
 ###术语<a id='术语'></a>
 使用 Faceswap 时，您将看到一些常见的机器学习术语，为了生活简单些，在这里展示了一个术语表：
@@ -477,8 +470,7 @@ Faceswap 中有几种可用的模型，并且随着时间的推移会增加更�
 
 值得注意的是，模型越大，训练所需的时间就越长。 “Original” 在 Nvidia GTX 1080 上的训练可能需要12-48小时 的时间。 而 “Villain” 在相同的硬件上可能需要一周以上的时间。 通常认为，两倍大小的输入，模型将花费两倍的时间。 这是不正确的，至少需要四倍的时间，甚至可能更长。 这是因为 64px 图像具有 4,096像素。 但是，一个 128px 的图像具有 16,384像素。 这是原来的 4倍，此外，模型需要处理这些增加数据的缩放，训练时间会快速增加。
 
-* Lightweight（64px输入，64px输出）-这是一种非常精简的模型，旨在具有 <=2GB VRAM&nbsp;[^VRAM] 的 GPU 上运行。 这不是所谓的 “production ready”，而是使具有较低端硬件的用户也可以训练模型。 在高端 GPU 上，它将非常快速地进行训练，因此对于在转向更复杂的模型之前，快速了解可能的交换情况很有用。
-[^VRAM]: VRAM指的是显卡内存。
+* Lightweight（64px输入，64px输出）-这是一种非常精简的模型，旨在具有 <=2GB VRAM 的 GPU 上运行。 这不是所谓的 “production ready”，而是使具有较低端硬件的用户也可以训练模型。 在高端 GPU 上，它将非常快速地进行训练，因此对于在转向更复杂的模型之前，快速了解可能的交换情况很有用。
 * Original（输入64px，输出64px）-完全启动模型，仍然可以提供出色的结果，并且有助于您理解 数据集的质量 实际上是 交换人脸质量 的最大驱动因素之一。
 * IAE（64px输入，64px输出）-与其它模型结构稍有不同。 它具有一个共享的编码器和一个共享的解码器，但是有 3个 中间层（一个用于A，一个用于B和一个共享层），它们位于编码器和解码器之间。 以这种方式构造，是试图更好地分离身份。 可以在此处了解有关此模型的更多信息：[https://github.com/deepfakes/faceswap/pull/251](https://github.com/deepfakes/faceswap/pull/251)
 * Dfaker（64px输入，128px输出）-此模型利用了一些与 “Original” 模型不同的技术，并且着重于将输入扩展为更高的分辨率输出。 尽管存在了一段时间，该模型仍然取得了不错的结果，而缺乏定制选项使其成为一种简单的 “发射后不管” 模式。
@@ -495,25 +487,25 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 由于这些模型各不相同，因此我将不会介绍每个模型的选项，而且对新的模型持续更新介绍是很难的，但是我将概述一些较常见的选项。 我们将重点放在适用于所有模型的全局选项上。所有选项都有工具提示，因此将鼠标悬停在选项上可获得更多的信息。
 
 要访问模型配置面板，请转到 “Settings” > “Configure Train Plugins...”：<br>
-![](https://forum.faceswap.dev/download/file.php?id=142)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/142.png)
 
 * Global【全局】<br>
 这些是适用于所有模型的选项：<br>
-![](https://forum.faceswap.dev/download/file.php?id=232)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/232.png)
 
 	此页面上的所有选项（“Learning Rate”除外）仅在创建新模型时生效。 一旦开始训练模型，此处选择的设置就会“锁定”到该模型，无论您在此处设置了什么，只要您继续训练，就会重新加载该设置。
 	* Face【人脸】<br>
 	输入模型的 适用于人脸 的选项<br>
-![](https://forum.faceswap.dev/download/file.php?id=157)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/157.jpg)
 		* Coverage -这将是输入模型的源图像覆盖值。 从人脸中心按一个给定的百分比裁剪，百分比越高，就能获得更多的面部。 裁剪百分比如下图所示：<br>
-		![](https://forum.faceswap.dev/download/file.php?id=144)<br>
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/144.jpg)<br>
 			虽然从直觉上看，高覆盖率（Coverage）似乎总是更好，但事实并非如此，这是一种权衡。 虽然更高的覆盖率意味着将交换更多的人脸，但模型的输入大小始终保持不变，因此，由于需要将更多信息打包到相同大小的图像中，其交换的细节信息可能就较少。 为了说明这一点，举一个极端例子，一张具有 62.5％ 覆盖率和 100％ 覆盖率的相同图像，它们的大小均为 32px。 如您所见，100％ 覆盖率图像包含的细节远少于 62.5％ 版本。 最终，此选项的正确选择取决于您：<br>
-		![](https://forum.faceswap.dev/download/file.php?id=145)
+		![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/145.jpg)
 	* Mask【遮罩】<br>
 	适用于 带遮罩 训练的选项。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=233)<br>
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/233.png)<br>
 	设置遮罩是一种指示图像的哪个区域是重要的方法。 在下面的示例中，红色区域是 “被遮盖的”（即：它被认为不重要），而透明区域 “未被遮盖”（这是面部，是我们感兴趣的区域）：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=156)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/156.png)
 	
 		带遮罩训练有两个目的：
 	
@@ -528,7 +520,7 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 		* Learn Mask -如前所述，学习遮罩是否有好处是有争议的。 启用此选项将使用更多的 VRAM，因此我倾向于不使用它，但是如果您希望在转换中使用预测的遮罩，则应启用此选项。
 	* Initialization【初始化】<br>
 	适用于初始化模型的选项。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=158)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/158.jpg)
 	
 		正如在训练概述所讨论的，模型的权重在每次迭代结束时都会更新。 初始化是首先设置这些权重的过程。 您可以看到这给模型启动时的一个帮助。 我们知道神经网络将用于什么，我们可以为这些权重设置一些值，这将有助于模型有一个快速的开始。
 
@@ -544,21 +536,21 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 		**注意**：此初始化程序不会在启用多 GPU 模式下运行，因此，如果使用多个GPU进行训练，则应在 1个 GPU 上开始训练，停止模型，然后继续启用多 GPU。
 	* Network【网络】<br>
 	适用于模型中 层 的选项<br>
-	![](https://forum.faceswap.dev/download/file.php?id=161)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/161.jpg)
 	
 		这里的选项适用于模型中使用的某些层。
 		* Subpixel Upscaling -这是在神经网络中放大图像的一种方法。 实际上，它所做的工作与 “Pixel Shuffler” 层完全相同，只是使用了不同的 TensorFlow 操作。 我建议不要使用它，因为它没有任何区别（将来可能会删除）
 		* Reflect Padding -在最终交换中，某些模型（尤其是“Villain”）和较小程度的 “DFL-SAE” 在交换区域的边缘周围都有明显的 “灰框”。 此选项更改卷积层中使用的填充类型，以帮助减轻此现象。 我只建议为这两个模型启用它，否则我将忽略它。
 	* Loss【损失】<br>
 	要使用的损失函数。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=159)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/159.jpg)
 	
 		有各种不同的方法来计算损失，或者让神经网络来辨别其在训练模型方面的表现。 我将不详细介绍每个可用的函数，因为这将是一个漫长的过程，并且在互联网上有很多有关每个函数的信息。
 		* Loss Function -最受欢迎的损失方法是 MAE（平均绝对误差）和 SSIM（结构相似度）。 我个人倾向于使用 SSIM。
 		* Penalized Mask Loss -此选项指示图像中位于面部区域内的图像是否比区域外的图像更重要。 此选项应始终启用。
 	* Optimizer【优化器】<br>
 	与优化器有关的选项。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=162)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/162.jpg)
 	
 		优化器控制神经网络的学习速率。
 		* Learning Rate -此项通常不需要处理，除非模型崩溃（所有图像都变为纯色块，并且损失达到很高且无法恢复），与该页面上的其他参数不同，可以为现有模型调整该值。
@@ -569,7 +561,7 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 
 * Model【模型】<br>
 这些是特定于每个 模型插件 的设置：<br>
-![](https://forum.faceswap.dev/download/file.php?id=163)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/163.png)
 
 	如前所述，我不会详细介绍模型的特定设置， 每个模型插件都有不同。 但是，我将介绍您可能在每个模型插件中看到的一些常用选项。与往常一样，每个选项都有一个工具提示，可为您提供更多信息。
 	* lowmem -一些插件具有 “lowmem” 模式。 这使您可以运行模型的精简版本，占用较少的 VRAM，但以降低精确度为代价。
@@ -578,25 +570,25 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 
 * Trainer【训练器】<br>
 配置页面中的最后一个选项卡适用于 训练器 或 “数据增强” 选项：<br>
-![](https://forum.faceswap.dev/download/file.php?id=164)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/164.jpg)
 
 	神经网络需要看到很多很多不同的图像。 为了更好地学习人脸，它会对输入图像执行各种操作。 这称为“数据增强”。 如注释中所述，标准设置适用于99％的用例，因此只有在知道它们会有什么影响时才进行更改。
 	* Evaluation【评估】 -评估训练状态的选项。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=165)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/165.jpg)
 	
 		* Preview Images -在预览窗口中显示交换的 A、B 两侧的人脸数量。
 	* Image Augmentation【图像增强】 -这些操作是在输入模型的人脸上执行的。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=166)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/166.jpg)
 		
 		* Zoom Amount -人脸在输入神经网络之前将其放大或缩小的百分比量。 帮助模型处理错位。
 		* Rotation Range -人脸在输入神经网络之前顺时针或逆时针旋转的百分比量。 帮助模型处理错位。
 		* Shift Range -人脸在输入神经网络之前 向左/向右 上/下 移动的百分比量。 帮助模型处理错位。
 		* Flip Chance -水平翻转人脸的机率。 有助于为神经网络创造更多的学习角度。
 	* Color Augmentation【颜色增强】 -这些 增强 可控制输入到模型中的人脸的 颜色/对比度，以使神经网络对色差更健壮。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=167)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/167.jpg)
 	
 		这是面罩下颜色增强功能的说明（您不会在 预览/最终 输出中看到它，仅用于演示目的）：<br>
-		![](https://user-images.githubusercontent.com/36920800/59102328-a6fd7580-8923-11e9-92b4-c7333c923ed8.gif)
+		![](![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/59102328-a6fd7580-8923-11e9-92b4-c7333c923ed8.gif))
 		
 		* Color Lightness -上下调整 输入图像亮度的百分比。 有助于应对不同的照明条件。
 		* Color AB -在 L\*a*b 颜色空间的 A/B 刻度上调整颜色的百分比。 帮助神经网络处理不同的颜色条件。
@@ -611,13 +603,13 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 现在您已经准备好了自己的人脸，已经配置了模型，是时候开始工作了！
 
 转到 GUI 中的 “Train” 选项卡：<br>
-![](https://forum.faceswap.dev/download/file.php?id=168)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/168.jpg)
 
 在这里，我们将告诉 Faceswap 所有东西都存储在哪里，我们想要什么，并开始实际训练。
 
 * Faces【人脸】<br>
 在这里，我们将告诉 Faceswap 人脸的存储位置以及它们各自的 “匹配文件” 的位置（如果需要）<br>
-![](https://forum.faceswap.dev/download/file.php?id=169)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/169.jpg)
 	* Input A -这是您从 提取过程 提取出来的 包含 “A” 人脸的文件夹位置。 这些人脸将从原来的场景中移除，并替换成您想交换的人脸。 此文件夹中应该有大约 1,000-10,000 张人脸。
 	* Alignments A -如果您是使用遮罩或使用 “Warp to Landmarks”进行训练，那么您将需要一个人脸匹配文件。 这将在提取过程中生成。 如果该文件存在于您的 faces 文件夹中，并且名为 alignments.json，则该过程 将自动的 将其提取。 必须在人脸文件夹中的每个人脸都在匹配文件中有一个条目，否则训练将失败。 您可能需要合并多个匹配文件。 您可以在提取流程中找到有关准备匹配文件以进行训练的更多信息。
 	* Input B -这是您从 提取过程 提取出来的 包含 “B” 人脸的文件夹位置。这些是将被交换到场景中的人脸。 此文件夹中应该有大约 1,000-10,000 张人脸。
@@ -625,14 +617,14 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 
 * Model【模型】<br>
 与您将要训练的模型有关的选项：<br>
-![](https://forum.faceswap.dev/download/file.php?id=171)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/171.jpg)
 	* Model Dir -将在其中保存模型文件。 如果启动的是新模型，则应该选择一个空文件夹，如果要从已经开始的模型恢复训练，则应该选择一个包含模型文件的现有文件夹。
 	* Trainer -这是您要为交换训练的模型。 以上是所有可用模型的概览。
 	* Allow Growth -[仅限NVIDIA]。 启用 TensorFlow GPU `allow_growth` 配置选项。 此选项可防止 TensorFlow 在启动时分配所有 GPU VRAM，但可能导致更高的 VRAM 碎片化和较慢的性能。 仅当您在训练中遇到问题时才启用它（特别是您遇到cuDNN错误）。
 
 * Training【训练】<br>
 训练特定设置：<br>
-![](https://forum.faceswap.dev/download/file.php?id=175)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/175.jpg)
 	* Batch Size -如上所述，批次大小是一次通过模型输入的图像数量。 增加此数字将增加 VRAM 使用率。增加批次大小将使训练加速到一定程度。 小批次可以提供一种有助于模型泛化的规则形式。 虽然大批次训练速度更快，但批次大小在 8到16 之间可能会产生更好的质量。 关于其他形式的规则能否替代或消除这种需求，仍然是一个悬而未决的问题。
 	* Iterations -在自动停止训练之前要执行的迭代次数。 这实际上仅是为了自动化，或确保一定时间后停止训练。 通常，当您对预览的质量感到满意时，您将手动停止训练。
 	* GPUs - [NVIDIA ONLY] -要训练的 GPU 数量。 如果您的系统中有多个 GPU，则最多可以利用其中 8个 GPU 来加快训练速度。 请注意，这种加速不是线性的，添加的 GPU 越多，性能回报越少。 最终，它允许您通过多个 GPU 来拆分更大的批次。 最弱的 GPU 和 VRAM 总是会成为您的瓶颈，因此在相同的 GPU 上进行训练时效果最佳。 您可以阅读有关 [Keras multi-gpu](https://keras.io/utils/#multi_gpu_model) 的更多信息。
@@ -640,11 +632,11 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 	* Warp To Landmarks -如前所述，数据是变形的，以便神经网络可以学习如何重建人脸。 “Warp to Landmarks” 是一种不同的变形方法，该方法试图从另一侧随机变形人脸成一个相似的人脸（即，对于A集，它从B集中找到一些相似的面，并随机的应用变形）。 是否与标准随机变形相比有任何 好处/不同，尚待确定。
 	* No Flip -随机翻转图像以帮助神经网络增加看到的数据量。 在大多数情况下，这很好，但是人脸是不对称的，因此对于某些目标而言，这可能是不希望的（例如，脸部一侧的痣）。 通常，应取消选中该选项，当然在开始训练时也可以勾选此项。 在随后的会话阶段，您可能要为某些交换禁用此功能。
 	* No Augment Color -Faceswap 执行颜色增强（前面有详细介绍）。 这确实有助于在 A和B 之间匹配 颜色/照明/对比度，但有时可能并不理想，因此可以在此处禁用它。 增色的影响如下所示：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=177)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/177.jpg)
 
 * VRAM Savings【VRAM节省】<br>
 优化设置以节省 VRAM：<br>
-![](https://forum.faceswap.dev/download/file.php?id=176)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/176.jpg)
 
 	Faceswap 提供了许多节省 VRAM 的优化选项，可以让用户训练他们无法训练的模型。 不幸的是，这些选项当前仅适用于 Nvidia 用户。 这些应该是最后的手段了。 如果您可以在不启用这些选项的情况下以至少 6-8 的批次大小进行训练，那么您应该首先这样做，因为所有这些都会带来速度上的损失。可以相互启用所有这些选项，以节省堆栈。
 	* Memory Saving Gradients - [NVIDIA ONLY] - MSG 是一种优化方法，可以节省 VRAM 的计算成本。 在最佳情况下，训练时间增加 20％ 即可使您的 VRAM 需求减半。 这是您应该尝试的第一个选项。 您可以阅读 [“Memory Saving Gradients”](https://github.com/cybertronai/gradient-checkpointing) 获取更多信息。
@@ -656,7 +648,7 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 
 * Saving【保存】<br>
 计划保存模型文件的选项：<br>
-![](https://forum.faceswap.dev/download/file.php?id=173)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/173.jpg)
 
 	* Save Interval -将模型保存到磁盘的频率。 保存模型时，不会对其进行训练，因此您可以提高该值以在训练时稍微提高速度（即它不再像以前那样等待模型写入磁盘）。 您可能不想将其提高得太高，因为它基本上是您的 “故障保护”。 如果模型在训练期间崩溃，那么您将只能从上一次保存继续。<br>
 	**注意**：如果使用 “Ping Pong” 的节省内存选项，则不应将此值增加到 100 以上，因为这可能会损害最终质量。
@@ -664,7 +656,7 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 
 * Preview【预览】<br>
 用于显示训练进度的预览窗口选项：<br>
-![](https://forum.faceswap.dev/download/file.php?id=172)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/172.jpg)
 
 	如果您使用的是 GUI，那么通常您将不想使用这些选项。 预览是一个弹出窗口，显示训练进度。 GUI 又将这些信息嵌入了 “显示” 面板中，因此弹出的 “显示” 窗口将仅显示 GUI 中完全相同的信息，而且也是多余的。 预览在每次保存迭代时更新。
 	* Preview Scale -弹出预览的大小与训练图像的大小相同。 如果您的训练图像为 256像素，则整个预览窗口将为 3072x1792。 对于大多数显示器来说，这太大了，因此此选项将预览按给定的比例缩小。
@@ -673,7 +665,7 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 
 * Timelapse【延时摄影】<br>
 用于生成一组可选的延时摄影图像的选项：<br>
-![](https://forum.faceswap.dev/download/file.php?id=174)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/174.jpg)
 
 	“延时摄影” 是一项可选功能，通过该功能，您可以查看随着时间推移对固定人脸进行训练的进度。 在每次保存迭代时，将保存一张图像，显示在该时间点对所选人脸进行训练的进度。 请注意，延时摄影图像占用的磁盘空间量会随着时间推移而堆积。
 	* Timelapse Input A -一个包含从 A（原始）侧生成延时摄影人脸的文件夹。 仅使用找到的前 14张 人脸。 如果您想从训练集中选择前 14张 人脸，则可以将其指向 “Input A” 文件夹。
@@ -682,7 +674,7 @@ Ok，您已经选择了模型，让我们开始训练吧！Well，等等。 我�
 
 * Global【全局】<br>
 Faceswap 的全局选项：<br>
-![](https://forum.faceswap.dev/download/file.php?id=170&sid=d6aa8c88b72d028326fb097d08b5677d)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/170.jpg)
 
 	这些选项对于 Faceswap 的每个部分都是全局的，而不仅仅是训练。
 	* Configfile -您可以指定一个自定义的 train.ini 文件，而不使用存储在 faceswap/config 文件夹中的文件。 如果您想在几种不同的良好配置之间进行切换，这将很有用。
@@ -697,7 +689,7 @@ Faceswap 的全局选项：<br>
 
 * Status Bar【状态栏】<br>
 它显示在右下方，并提供当前训练过程的概览。 它在每个迭代完成时更新：<br>
-![](https://forum.faceswap.dev/download/file.php?id=187&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/187.jpg)
 
 	您无需密切关注这里的损失数字。 对于 faceswapping，它们实际上是毫无意义的。 这些数字给出了神经网络认为它重建 人脸A 和 人脸B 的程度。 然而我们感兴趣的是模型从人脸 编码A 创建的 人脸B 的效果如何。 这是一个不可能获得的损失值，因为现实世界中没有人脸交换的例子可以让神经网络进行比较。
 	* Elapsed -此次训练消耗的时间。
@@ -707,11 +699,11 @@ Faceswap 的全局选项：<br>
 
 * Preview Tab【预览选项卡】<br>
 模型当前状态的可视化。 这表示模型重建和交换人脸的能力。 每次保存模型时都会更新：<br>
-![](https://forum.faceswap.dev/download/file.php?id=184&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/184.jpg)
 
 	想知道模型是否已完成训练的最好方法是观看预览。 最终，这里显示了实际交换的情况。 当您对预览感到满意时，就该停止训练了。 眼部眩光和牙齿等细节将是最后才会显露出来。 一旦这些都清晰明确了，通常可以很好地表明训练即将完成。
 	* 预览将显示 12列。 前 6个 是 “A”（原始人脸）侧，后 6个 是 “B”（交换人脸）侧。 前后 6列 里分为 2组，每组 3列。 对于以下各列：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=190&sid=30b6e4d39c83f403e84a7ed837b53a47)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/190.png)
 		* 第 1列 是输入到模型中的不变人脸
 		* 第 2列 是模型试图重建该人脸
 		* 第 3列 是模型试图交换的人脸
@@ -722,7 +714,7 @@ Faceswap 的全局选项：<br>
 	* 可以通过取消选中右下角的 “Enable Preview” 框来禁用预览。
 
 * Graph Tab【图表选项卡】 -此选项卡显示一个随时间变化的损失曲线图。 每次保存模型时都会更新，但是可以通过单击 “Refresh” 按钮来刷新：<br>
-![](https://forum.faceswap.dev/download/file.php?id=185&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/185.jpg)
 
 	您无需太在意此处的数字。 对于 faceswapping，它们实际上是毫无意义的。这些数字给出了神经网络认为它重建 人脸A 和 人脸B 的程度。  然而我们感兴趣的是模型从人脸 编码A 创建的 人脸B 的效果如何。 这是一个不可能获得的损失值，因为现实世界中没有人脸交换的例子可以让神经网络进行比较。
 
@@ -732,7 +724,7 @@ Faceswap 的全局选项：<br>
 	* 可以通过取消选中右下角的 “Enable Preview” 框来禁用图表。
 
 * Analysis Tab【分析选项卡】 -此选项卡显示 当前正在运行 和 以前的训练会话 的一些统计信息：<br>
-![](https://forum.faceswap.dev/download/file.php?id=186&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/186.jpg)
 	* 每列说明如下：
 		* Graphs -单击蓝色图标以打开所选会话的图表。
 		* Start/End/Elapsed -每个会话的开始时间，结束时间和总训练时间。
@@ -745,19 +737,19 @@ Faceswap 的全局选项：<br>
 	如上所述，损失图对于查看损失是否正在下降很有用，但是当模型经过长时间训练时可能很难辨别。 分析选项卡可以为您提供更详细的视图。
 	
 	* 单击您最近的训练会话旁边的蓝色图标，将弹出所选会话的训练图表。<br>
-	![](https://forum.faceswap.dev/download/file.php?id=178&sid=30b6e4d39c83f403e84a7ed837b53a47)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/178.jpg)
 	* 选择 “Show Smoothed”，将 “Smoothing amount” 提高到0.99，点击刷新按钮，然后放大最后的 5,000-10,000次 迭代：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=183&sid=30b6e4d39c83f403e84a7ed837b53a47)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/183.jpg)
 	* 现在该图表已放大，您应该能够知道损失是否仍在下降或损失是否已经 “收敛”。 收敛是指模型不再学习任何东西。 在此示例中，您可以看到，虽然乍一看似乎模型已经收敛，但仔细检查，损失仍在下降：<br>
-	![](https://forum.faceswap.dev/download/file.php?id=181&sid=30b6e4d39c83f403e84a7ed837b53a47)
+	![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/181.jpg)
 
 ##停止和重新开始<a id='停止和重新开始'></a>
 只需按一下 GUI 左下方的 “Terminate” 按钮，即可停止训练。 模型将保存其当前状态并退出。
 
 通过选择相同的设置并将 “Model dir” 文件夹指向与保存的文件夹相同的位置，可以恢复模型。 通过 GUI "File" 菜单或选项面板下面的保存图标保存 Faceswap 配置，可以使其变得更加容易。<br>
-![](https://forum.faceswap.dev/download/file.php?id=188&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/188.jpg)
 
-![](https://forum.faceswap.dev/download/file.php?id=189&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/189.jpg)
 
 然后，您可以重新加载配置并继续训练。
 
@@ -769,11 +761,11 @@ Faceswap 的全局选项：<br>
 Faceswap 提供了可轻松恢复模型的工具。 每次保存迭代（损失值总体下降）时都会保存备份，这些备份可以通过以下方式恢复：
 
 * 转到 “Tools” > “Restore”：<br>
-![](https://forum.faceswap.dev/download/file.php?id=191&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/191.png)
 
 * Model Dir -包含损坏的模型的文件夹应在此处输入：<br>
-![](https://forum.faceswap.dev/download/file.php?id=192&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/192.png)
 
 点击 “Restore” 按钮。 一旦恢复，您应该可以从上次备份继续训练。<br>
-![](https://forum.faceswap.dev/download/file.php?id=155&sid=30b6e4d39c83f403e84a7ed837b53a47)
-![](https://forum.faceswap.dev/download/file.php?id=154&sid=30b6e4d39c83f403e84a7ed837b53a47)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/155.png)
+![](https://github.com/liafuzho/faceswap-doc-cn/blob/master/img/154.png)
