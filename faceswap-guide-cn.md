@@ -1,11 +1,11 @@
-#[FaceSwap](https://faceswap.dev/) 使用指南#
+# [FaceSwap](https://faceswap.dev/) 使用指南#
 <font color="silver">翻译自：</font><br>
 [https://faceswap.dev/forum/viewtopic.php?f=5&t=27](https://faceswap.dev/forum/viewtopic.php?f=5&t=27)<br>
 [https://forum.faceswap.dev/viewtopic.php?f=6&t=146](https://forum.faceswap.dev/viewtopic.php?f=6&t=146)
 
 <font color="silver">翻译者：罗京</font>
 
-##内容##
+## 内容
 * [“提取” 流程](#“提取”_流程)
 	* [介绍](#“提取”流程介绍)
 	* [为什么要提取](#为什么要提取)
